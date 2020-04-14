@@ -74,7 +74,7 @@ export default class SwapiService {
     }
 
     // Преобразование данных планет
-     _transformPlanet (planet) {
+     _transformPlanet = (planet) => {
         return {
             id: this._extractId(planet),
             name: planet.name,
@@ -85,7 +85,7 @@ export default class SwapiService {
     }
 
     // Преобразование данных кораблей
-     _transformStarship (starship) {
+     _transformStarship = (starship) => {
         return {
             id: this._extractId(starship),
             name: starship.name,
@@ -100,7 +100,7 @@ export default class SwapiService {
     }
 
     // Преобразование данных людей
-     _transformPeople (person) {
+     _transformPeople = (person) => {
         return {
             id: this._extractId(person),
             name: person.name,
