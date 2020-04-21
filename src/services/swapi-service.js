@@ -4,7 +4,7 @@
 export default class SwapiService {
 
     // Base url.
-    _apiBase = 'https://swapi.co/api';
+    _apiBase = 'https://swapi.dev/api';
 
     async getResource(url) {
         const rec = await fetch(`${this._apiBase}${url}`);
@@ -15,46 +15,46 @@ export default class SwapiService {
         }
 
         return await rec.json();
-    }
+    };
 
      /**  Get data by request  */
      // #region
 
     // Получение всех людей
-    async getAllPeople() {
+    getAllPeople = async() => {
         const rec = await this.getResource(`/people/`);
         return rec.results.map(this._transformPeople);
-    }
+    };
 
     // Получение информации по человеку по его id
-    async getPerson(id) {
+    getPerson = async(id) => {
         const rec = await this.getResource(`/people/${id}/`);
         return this._transformPeople(rec);
-    }
+    };
 
     // Получение всех планет
-    async getAllPlanets() {
+    getAllPlanets = async() => {
         const rec = await this.getResource(`/planets/`);
         return rec.results.map(this._transformPlanet);
-    }
+    };
 
     // Получение информации по планете по его id
-    async getPlanet(id) {
+    getPlanet = async(id) => {
         const rec = await this.getResource(`/planets/${id}/`);
         return this._transformPlanet(rec);
-    }
+    };
 
     // Получение всех кораблей
-    async getAllStarships() {
+    getAllStarships = async() => {
         const rec = await this.getResource(`/starships/`);
         return rec.results.map(this._transformStarship);
-    }
+    };
 
     // Получение информации по кораблю по его id
-    async getStarship(id) {
+    getStarship = async(id) => {
         const rec = await this.getResource(`/starships/${id}`);
         return this._transformStarship(rec);
-    }
+    };
 
     // #endregion
 
@@ -68,7 +68,7 @@ export default class SwapiService {
      * @returns {string | *}
      * @private
      */
-    static _extractId (item) {
+    _extractId = (item) => {
         const regexp = /\/([0-9]*)\/$/;
         return  item.url.match(regexp)[1];
     }
@@ -105,8 +105,8 @@ export default class SwapiService {
             id: this._extractId(person),
             name: person.name,
             gender: person.gender,
-            birthYear: person.birthYear,
-            eyeColor: person.eyeColor,
+            birthYear: person.birthYear ? person.birthYear : 'n/a',
+            eyeColor: person.eyeColor ? person.eyeColor : 'n/a',
         }
     }
 

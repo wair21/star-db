@@ -2,21 +2,22 @@ import React, {Component} from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ItemList from '../item-list';
-import PersonDetails from '../person-details';
-
+import PeoplePage from "../people-page";
 import './app.css';
+import ItemList from "../item-list";
+import PersonDetails from "../person-details";
+import SwapiService from "../../services/swapi-service";
 
 export default class App extends Component{
 
+    swapiService = new SwapiService();
+
     state = {
-        showRandomPlanet: true,
-        selectedPerson: null
+        showRandomPlanet: true
     }
-    onPersonSelected = (id) => {
-        this.setState({
-            selectedPerson: id
-        });
+
+    componentDidCatch(error, errorInfo) {
+        console.log('catch!!!');
     }
 
     render () {
@@ -24,10 +25,13 @@ export default class App extends Component{
             <div>
                 <Header />
                 <RandomPlanet />
+                <PeoplePage/>
 
                 <div className="row mb2">
                     <div className="col-md-6">
                         <ItemList
+                            renderItem={(item) =>item.name}
+                            getData={this.swapiService.getAllPlanets}
                             onItemSelected={this.onPersonSelected}/>
                     </div>
                     <div className="col-md-6">

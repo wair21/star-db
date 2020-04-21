@@ -1,67 +1,53 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi-service';
 import './item-list.css';
 import Spinner from "../spinner";
 
 export default class ItemList extends Component {
 
-    swapiService = new SwapiService();
-
     state= {
-        peopleList: null
+        itemList: null
     }
 
     componentDidMount() {
-        this.swapiService
-            .getAllPeople()
-            .then((peopleList) => {
-                this.setState({
-                    peopleList
-                });
+        const {  getData } = this.props;
+        getData()
+            .then((itemList) => {
+                this.setState({ itemList });
             });
     }
 
     /**
-     * Create new item in people list
+     * Create new item in item list
      * @param arr
      * @returns {*[]}
      */
     renderItems (arr) {
-        if(!arr) {
-            arr = [
-                {
-                 id: 1,
-                 name: 'Luke'
-                },
-                {
-                    id: 2,
-                    name: 'Nikkie'
-                }
-            ];
-        }
-        return arr.map(({id, name}) => {
+        return arr.map((item) => {
+            const { id } = item;
+            const label = this.props.renderItem(item);
             return (
                 <li key={id}
                     onClick={()=> this.props.onItemSelected(id)}
                     className="list-group-item">
-                    {name}
+                    {label}
                 </li>
             );
         })
     }
 
     render() {
-        const { peopleList } = this.state;
+        const { itemList } = this.state;
 
-        if (peopleList) {
+        // If nothing - show spinner
+        if (!itemList) {
             return <Spinner/>
         }
 
-        const itemList = this.renderItems(peopleList);
+        const itemList2 = this.renderItems(itemList);
 
         return (
             <ul className="item-list list-group">
-                {itemList}
+                { itemList2 }
             </ul>
         );
     }
