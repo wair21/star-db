@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-
 import './spinner.css';
 
+/**
+ * Спиннер во время загрузки данных.
+ */
 export default class Spinner extends Component {
 
     render() {

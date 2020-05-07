@@ -1,6 +1,11 @@
 import React from 'react';
-
 import './header.css';
+
+/**
+ * Заголовок приложения
+ * @returns {*}
+ * @constructor
+ */
 
 const Header = () => {
     return (

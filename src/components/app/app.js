@@ -8,6 +8,9 @@ import ItemList from "../item-list";
 import PersonDetails from "../person-details";
 import SwapiService from "../../services/swapi-service";
 
+/**
+ * Главный компонент приложения
+ */
 export default class App extends Component{
 
     swapiService = new SwapiService();
@@ -17,6 +20,7 @@ export default class App extends Component{
     }
 
     componentDidCatch(error, errorInfo) {
+        // TODO сделать обработку  ошибок
         console.log('catch!!!');
     }
 

@@ -21,15 +21,25 @@ export default class RandomPlanet extends Component {
         this._interval = setInterval(this.updatePlanet, 5000);
     }
 
+    /**
+     * Обработчик события загрузки планет
+     * @param planet
+     */
     onPlanetLoaded = (planet) => {
         this.setState({planet, loading: false, error: false});
     };
 
+    /**
+     * Обработчик ошибки
+     * @param error
+     */
     onError = (error) => {
         this.setState({error: true});
     };
 
-    //  Update planet by request
+    /**
+     * Запрос новых планет
+     */
     updatePlanet= () => {
         const id = Math.floor(Math.random()*25) + 2;
         this.swapiService
@@ -67,6 +77,14 @@ export default class RandomPlanet extends Component {
     }
 }
 
+
+// TODO вынести в отдельный компонент
+/**
+ * Отображение арактеристик каждой планеты
+ * @param planet
+ * @returns {*}
+ * @constructor
+ */
 const PlanetView = ({planet}) => {
     const {  id, name, population, rotationPeriod, diameter } = planet;
 

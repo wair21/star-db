@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import './item-list.css';
 import Spinner from "../spinner";
 
+/**
+ * Компонент отображения даннных в виде списка
+ */
 export default class ItemList extends Component {
 
+    // itemList - список сущностей для отображения
     state= {
         itemList: null
     }
@@ -24,7 +28,7 @@ export default class ItemList extends Component {
     renderItems (arr) {
         return arr.map((item) => {
             const { id } = item;
-            const label = this.props.renderItem(item);
+            const label = this.props.children(item);
             return (
                 <li key={id}
                     onClick={()=> this.props.onItemSelected(id)}
@@ -38,7 +42,7 @@ export default class ItemList extends Component {
     render() {
         const { itemList } = this.state;
 
-        // If nothing - show spinner
+       // Пока грузится, показываем индикатор загрузки.
         if (!itemList) {
             return <Spinner/>
         }

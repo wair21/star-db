@@ -6,6 +6,9 @@ import Indicator from "../indicator";
 import SwapiService from "../../services/swapi-service";
 import Row from "../row";
 
+/**
+ * Копонент отображения персонажей
+ */
 export default class PeoplePage extends Component {
 
     /**
@@ -37,9 +40,10 @@ export default class PeoplePage extends Component {
         // List of persons
         const itemList = (
             <ItemList
-                renderItem={({name, gender}) =>`${name}  (${gender})`}
                 getData={this.swapiService.getAllPeople}
-                onItemSelected={this.onPersonSelected}/>
+                onItemSelected={this.onPersonSelected}>
+                {(i) => (`${i.name}  (${i.gender})`)}
+            </ItemList>
         );
 
         // person detail component

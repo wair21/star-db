@@ -1,6 +1,11 @@
 import React from 'react';
 import './indicator.css';
 
+/**
+ * Заглущка на случай ошибки отображения какого-либо компонента.
+ * @returns {*}
+ * @constructor
+ */
 const  Indicator = () => {
     return (
         <div className="error-indicator">
