@@ -1,43 +1,46 @@
 import React, { Component } from 'react';
 import SwapiService from "../../services/swapi-service";
 
-import './person-details.css';
+import './item-details.css';
 import Spinner from "../spinner";
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
     state = {
-        personId: null,
+        itemId: null,
         loading: false
     };
 
     swapiService = new SwapiService();
 
+    componentWillMount(props) {
+        this.setState({itemId:props.itemId, loading:true});
+    }
+
     componentDidMount(props) {
-        this.updatePerson()
+        this.updatePerson();
     };
 
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId) {
-            this.setState({personId:this.props.personId, loading:true});
+        if (this.props.itemId !== prevProps.itemId) {
+            this.setState({itemId:this.props.itemId, loading:true});
             this.updatePerson();
         }
     };
 
     updatePerson() {
-        const { personId } = this.state;
+        const { itemId } = this.state;
 
-        if(!personId) {
+        if(!itemId) {
             return;
         }
 
         this.swapiService
-            .getPerson(personId)
+            .getPerson(itemId)
             .then((person) => {
                 this.setState({person, loading: false});
             })
     }
-
 
 
     render() {
@@ -53,12 +56,12 @@ export default class PersonDetails extends Component {
         }
 
         return (
-            <div className="person-details card">
-                <img className="person-image"
+            <div className="item-details card">
+                <img className="person-image" alt="empty 1"
                      src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
 
                 <div className="card-body">
-                    <h4>{name} {this.props.personId}</h4>
+                    <h4>{name} {this.props.itemId}</h4>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">
                             <span className="term">Gender:</span>

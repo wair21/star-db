@@ -4,9 +4,12 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from "../people-page";
 import './app.css';
+
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 import SwapiService from "../../services/swapi-service";
+import ErrorBoundry from "../error-boundry";
+import Row from "../row";
 
 /**
  * Главный компонент приложения
@@ -25,25 +28,43 @@ export default class App extends Component{
     }
 
     render () {
-        return (
-            <div>
-                <Header />
-                <RandomPlanet />
-                <PeoplePage/>
+        const personDetails = (
+          <ItemDetails itemId={11} />
+        );
 
-                <div className="row mb2">
-                    <div className="col-md-6">
-                        <ItemList
-                            renderItem={(item) =>item.name}
-                            getData={this.swapiService.getAllPlanets}
-                            onItemSelected={this.onPersonSelected}/>
-                    </div>
-                    <div className="col-md-6">
-                        <PersonDetails personId={this.state.selectedPerson}/>
-                    </div>
-                </div>
+        const starshipDetails = (
+          <ItemDetails itemId={6} />
+        );
+
+        return (
+            <div className="stardb-app">
+                <ErrorBoundry>
+                    <Header />
+                    <Row
+                        left={personDetails}
+                        right={starshipDetails}
+                        />
+
+                </ErrorBoundry>
+
+
             </div>
             )
 
     };
 };
+
+
+/*
+
+<div className="row mb2">
+    <div className="col-md-6">
+        <ItemList
+            renderItem={(item) =>item.name}
+            getData={this.swapiService.getAllPlanets}
+            onItemSelected={this.onPersonSelected}/>
+    </div>
+    <div className="col-md-6">
+        <ItemDetails personId={this.state.selectedPerson}/>
+    </div>
+</div>*/

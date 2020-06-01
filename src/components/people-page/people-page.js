@@ -1,31 +1,11 @@
 import React, { Component } from 'react';
 import './people-page.css';
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 import Indicator from "../indicator";
 import SwapiService from "../../services/swapi-service";
 import Row from "../row";
-
-
-class ErrorBoundry extends Component {
-
-    state = {
-        hasError: false
-    }
-
-    componentDidCatch() {
-        this.setState({hasError: true});
-    }
-
-    render () {
-        if(this.state.hasError) {
-            return <Indicator/>;
-        }
-        return this.props.children;
-    }
-}
-
-
+import ErrorBoundry from "../error-boundry";
 
 /**
  * Копонент отображения персонажей
@@ -64,9 +44,9 @@ export default class PeoplePage extends Component {
         );
 
         // person detail component
-        const personDetails = (
+        const itemDetails = (
             <ErrorBoundry>
-                <PersonDetails personId={this.state.selectedPerson}/>
+                <ItemDetails personId={this.state.selectedPerson}/>
             </ErrorBoundry> 
         );
 
@@ -74,7 +54,7 @@ export default class PeoplePage extends Component {
             <div>
                 <Row
                     left={itemList}
-                    right={personDetails}/>
+                    right={itemDetails}/>
             </div>
         )
     }
