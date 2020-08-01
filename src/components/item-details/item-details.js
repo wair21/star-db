@@ -8,13 +8,18 @@ export default class ItemDetails extends Component {
 
     state = {
         itemId: null,
-        loading: false
+        loading: false,
+        getData: null,
+        getImageUrl: function () {
+
+        }
     };
 
     swapiService = new SwapiService();
 
     componentWillMount(props) {
-        this.setState({itemId:props.itemId, loading:true});
+        const {itemId, getData, getImageUrl} = this.props;
+        this.setState({ itemId, getData, getImageUrl });
     }
 
     componentDidMount(props) {
@@ -28,28 +33,34 @@ export default class ItemDetails extends Component {
         }
     };
 
+    /**
+     *  Update item info
+     */
     updatePerson() {
-        const { itemId } = this.state;
+        const { itemId, getData, getImageUrl } = this.state;
 
         if(!itemId) {
             return;
         }
 
-        this.swapiService
-            .getPerson(itemId)
-            .then((person) => {
-                this.setState({person, loading: false});
+        getData(itemId)
+            .then((item) => {
+                this.setState({item,
+                    loading: false,
+                    getImageUrl: getImageUrl(item)
+                });
             })
     }
 
 
     render() {
+        const {getImageUrl} = this.state;
 
-        if(!this.state.person) {
+        if(!this.state.item) {
             return <span>There is no info. Try again. </span>
         }
 
-        const { id, name, gender, birthYear, eyeColor} = this.state.person;
+        const { id, name, gender, birthYear, eyeColor} = this.state.item;
 
         if (this.state.loading) {
             return <Spinner/>
@@ -58,7 +69,7 @@ export default class ItemDetails extends Component {
         return (
             <div className="item-details card">
                 <img className="person-image" alt="empty 1"
-                     src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
+                     src={getImageUrl} />
 
                 <div className="card-body">
                     <h4>{name} {this.props.itemId}</h4>

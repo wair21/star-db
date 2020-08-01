@@ -6,8 +6,10 @@ export default class SwapiService {
     // Base url.
     _apiBase = 'https://swapi.dev/api';
 
+    _imageBase = 'https://starwars-visualguide.com/assets/img/';
+
     async getResource(url) {
-        const rec = await fetch(`${this._apiBase}${url}`);
+        const rec = await fetch('${this._apiBase}${url}');
 
         // Если не все ок, то кидаем ошибку.
         if(!rec.ok) {
@@ -108,6 +110,20 @@ export default class SwapiService {
             birthYear: person.birthYear ? person.birthYear : 'n/a',
             eyeColor: person.eyeColor ? person.eyeColor : 'n/a',
         }
+    }
+
+    getPersonImage = ({id}) => {
+        return `${this._imageBase}/characters/${id}.jpg`;
+    }
+
+    getStarshipImage = ({id}) => {
+        //return `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
+        return `${this._imageBase}/starships/${id}.jpg`;
+    }
+
+    getPlanetImage = ({id}) => {
+        //return `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
+        return `${this._imageBase}/planets/${id}.jpg`;
     }
 
     // #endregion

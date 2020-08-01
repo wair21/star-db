@@ -28,12 +28,20 @@ export default class App extends Component{
     }
 
     render () {
+        const {getPerson, getStarship, getPersonImage, getStarshipImage} = this.swapiService;
+
         const personDetails = (
-          <ItemDetails itemId={11} />
+          <ItemDetails
+              getImageUrl={getPersonImage}
+              getData={getPerson}
+              itemId={11} />
         );
 
         const starshipDetails = (
-          <ItemDetails itemId={6} />
+          <ItemDetails
+              getImageUrl={getStarshipImage}
+              getData={getStarship}
+              itemId={10} />
         );
 
         return (
